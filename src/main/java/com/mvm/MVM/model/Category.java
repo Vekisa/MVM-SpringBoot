@@ -12,6 +12,9 @@ public class Category {
     @Column
     private String name;
 
+    @OneToOne(mappedBy = "category")
+    private Image image;
+
     public Category() {
     }
 
@@ -29,5 +32,13 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 }
