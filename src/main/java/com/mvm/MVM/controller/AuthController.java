@@ -24,4 +24,10 @@ public class AuthController {
         userService.newUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/current_user", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> currentUser(){
+        return new ResponseEntity<>(userService.getCurrentUser(),HttpStatus.OK);
+    }
+
 }

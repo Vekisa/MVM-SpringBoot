@@ -49,9 +49,6 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is already taken!");
         }
 
-        if (userRepository.existsByEmail(userDTO.getEmail())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is registered!");
-        }
 
         Role role = roleRepository.findByName("ROLE_USER")
                 .orElseThrow(() -> new RuntimeException("Role can't be found!"));
@@ -61,13 +58,8 @@ public class UserService {
         String password = passwordEncoder.encode(userDTO.getPassword());
 
         User user = new User();
-
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setEmail(userDTO.getEmail());
         user.setUsername(userDTO.getUsername());
-        user.setAddress(userDTO.getAddress());
-        user.setPhone(userDTO.getPhone());
+        user.setName(userDTO.getName());
         tempRoles.add(role);
         user.setRoles(tempRoles);
         user.setPassword(password);
