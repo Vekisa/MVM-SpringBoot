@@ -50,18 +50,17 @@ public class UserService {
         }
 
 
-        Role role = roleRepository.findByName("ROLE_USER")
-                .orElseThrow(() -> new RuntimeException("Role can't be found!"));
+        //Role role = roleRepository.findByName("ROLE_USER").orElseThrow(() -> new RuntimeException("Role can't be found!"));
 
-        Set<Role> tempRoles = new HashSet<>();
+        //Set<Role> tempRoles = new HashSet<>();
 
         String password = passwordEncoder.encode(userDTO.getPassword());
 
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setName(userDTO.getName());
-        tempRoles.add(role);
-        user.setRoles(tempRoles);
+        //tempRoles.add(role);
+        //user.setRoles(tempRoles);
         user.setPassword(password);
         user = userRepository.save(user);
 
