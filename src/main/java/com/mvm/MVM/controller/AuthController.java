@@ -1,5 +1,6 @@
 package com.mvm.MVM.controller;
 
+import com.mvm.MVM.UserDto;
 import com.mvm.MVM.model.User;
 import com.mvm.MVM.service.UserService;
 
@@ -20,7 +21,7 @@ public class AuthController {
     private UserService userService;
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> userRegistration(@RequestBody User user){
+    public ResponseEntity<?> userRegistration(@RequestBody UserDto user){
         userService.newUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }

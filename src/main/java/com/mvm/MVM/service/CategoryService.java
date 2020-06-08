@@ -23,11 +23,19 @@ public class CategoryService {
     public Category findById(Long id){
         Optional<Category> category = categoryRepository.findById(id);
         if(!category.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nema kategrije!");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nema kategorije!");
         return category.get();
     }
 
     public void save(Category category){
         categoryRepository.save(category);
+    }
+
+    public Category findByName(String name){
+        System.out.println("Ime: " + name);
+        Optional<Category> category = categoryRepository.findByName(name.trim());
+        if(!category.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nema kategorije!");
+        return categoryRepository.findByName(name.trim()).get();
     }
 }

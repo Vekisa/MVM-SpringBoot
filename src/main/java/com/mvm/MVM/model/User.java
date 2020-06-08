@@ -26,6 +26,9 @@ public class User implements UserDetails {
     @Column
     private String password;
 
+    @ManyToOne
+    private Category category;
+
     @OneToOne(mappedBy = "user")
     private Image image;
 
@@ -75,6 +78,14 @@ public class User implements UserDetails {
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override

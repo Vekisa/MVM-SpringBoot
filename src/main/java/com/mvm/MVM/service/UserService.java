@@ -1,5 +1,7 @@
 package com.mvm.MVM.service;
 
+import com.mvm.MVM.UserDto;
+import com.mvm.MVM.model.Category;
 import com.mvm.MVM.model.Role;
 import com.mvm.MVM.model.User;
 import com.mvm.MVM.repository.RoleRepository;
@@ -12,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -24,6 +27,9 @@ public class UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private CategoryService categoryService;
 
 
     private final PasswordEncoder passwordEncoder;
@@ -43,26 +49,27 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User newUser(User userDTO) {
+    public User newUser(UserDto userDTO) {
 
         if (userRepository.existsByUsername(userDTO.getUsername())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is already taken!");
         }
 
-
-        //Role role = roleRepository.findByName("ROLE_USER").orElseThrow(() -> new RuntimeException("Role can't be found!"));
-
-        //Set<Role> tempRoles = new HashSet<>();
-
         String password = passwordEncoder.encode(userDTO.getPassword());
 
+        System.out.println("AAAAAA " + userDTO.getCategory());
+
+        Category category = categoryService.findByName(userDTO.getCategory());
+
         User user = new User();
+        user.setCategory(category);
         user.setUsername(userDTO.getUsername());
         user.setName(userDTO.getName());
-        //tempRoles.add(role);
-        //user.setRoles(tempRoles);
         user.setPassword(password);
         user = userRepository.save(user);
+
+        category.getUsers().add(user);
+        categoryService.save(category);
 
         userDTO.setPassword("");
 

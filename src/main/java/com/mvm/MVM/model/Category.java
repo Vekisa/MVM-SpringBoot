@@ -1,6 +1,8 @@
 package com.mvm.MVM.model;
 
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Category {
@@ -14,6 +16,9 @@ public class Category {
 
     @OneToOne(mappedBy = "category")
     private Image image;
+
+    @OneToMany(mappedBy = "category")
+    private List<User> users;
 
     public Category() {
     }
@@ -40,5 +45,13 @@ public class Category {
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }
