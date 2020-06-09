@@ -1,4 +1,13 @@
 
+INSERT INTO `mvm`.`user` (`name`, `password`, `username`) VALUES ('Admin Admin', '$2a$10$OG11FUU61dFASaGM6x7tMuW4yjDSg0YkLswAnYLzla.VeSIPrdp5u', 'admin');
+INSERT INTO `mvm`.`user` (`name`, `password`, `username`) VALUES ('User User', '$2a$10$a00nqUIZBgh9OtnCyqHhk.VT73kyt8aiYK2216.yvtgBMR7EPqOf.',  'user');
+
+INSERT INTO `mvm`.`role` (`id`, `name`) VALUES ('1', 'ROLE_USER');
+INSERT INTO `mvm`.`role` (`id`, `name`) VALUES ('2', 'ROLE_ADMIN');
+
+INSERT INTO `mvm`.`user_roles` (`user_id`, `role_id`) VALUES ('1', '2');
+INSERT INTO `mvm`.`user_roles` (`user_id`, `role_id`) VALUES ('2', '1');
+
 INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('1', 'Jaja i živinsko meso');
 INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('2', 'Živa stoka');
 INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('3', 'Mleko');
