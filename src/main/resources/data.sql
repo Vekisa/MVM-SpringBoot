@@ -12,10 +12,10 @@ INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('5', 'Voće');
 INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('6', 'Povrće');
 INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('7', 'Žitarice');
 
-INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('1', 'p1', '1');
-INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('2', 'p2', '2');
-INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('3', 'p3', '3');
-INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('4', 'p4', '4');
-INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('5', 'p5', '5');
-INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('6', 'p6', '6');
-INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('7', 'p7', '7');
+INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('1', 'src/main/resources/chicken.png', '1');
+INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('2', 'src/main/resources/lamb.png', '2');
+INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('3', 'src/main/resources/milk.png', '3');
+INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('4', 'src/main/resources/milk_products.png', '4');
+INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('5', 'src/main/resources/fruit.png', '5');
+INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('6', 'src/main/resources/vegetables.png', '6');
+INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('7', 'src/main/resources/grains.png', '7');

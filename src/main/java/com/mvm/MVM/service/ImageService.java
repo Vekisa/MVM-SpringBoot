@@ -1,9 +1,19 @@
 package com.mvm.MVM.service;
 
-import com.mvm.MVM.model.Category;
-import com.mvm.MVM.model.Image;
-import com.mvm.MVM.cofiguration.UploadFileResponse;
-import com.mvm.MVM.repository.ImageRepository;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.DatatypeConverter;
+
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -16,12 +26,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import com.mvm.MVM.cofiguration.UploadFileResponse;
+import com.mvm.MVM.dto.ImageDto;
+import com.mvm.MVM.model.Category;
+import com.mvm.MVM.model.Image;
+import com.mvm.MVM.repository.ImageRepository;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 @Service
 public class ImageService {
@@ -34,6 +44,9 @@ public class ImageService {
 
     @Autowired
     private CategoryService categoryService;
+    
+    @Autowired
+    private UserService userService;
 
     public void save(Image image){
         imageRepository.save(image);
@@ -103,6 +116,49 @@ public class ImageService {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
+    }
+    
+    public Image findByUserId(Long id) {
+    	return imageRepository.findByUserId(id);
+    }
+    
+    public Image findByCategoryId(Long id) {
+    	return imageRepository.findByCategoryId(id);
+    }
+    
+    public Image dto2Image(ImageDto dto) {
+    	Image image = new Image();
+    	if(dto.getCategoryId() != null) {
+    		image.setCategory(categoryService.findById((long)Double.parseDouble(dto.getCategoryId())));
+    	}
+    	if(dto.getUserId() != null) {
+    		image.setUser(userService.findById(Long.parseLong(dto.getUserId())));
+    	}
+    	image.setPath(getPath(dto.getContent(), dto.getUserId()));
+    	return image;
+    }
+    
+    private String getPath(String content, String userId) {
+    	try {
+    		byte[] imageByte = DatatypeConverter.parseBase64Binary(content);
+    		BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageByte));
+    		File outputFile = new File("src/main/resources/profile_image_" + userId + ".png");
+    		ImageIO.write(image, "png", outputFile);
+    		return outputFile.getPath();
+    	}catch (Exception e) {
+    		e.printStackTrace();
+		}
+    	return null;
+    }
+    
+    public String bitmap2String(String path) {
+    	try {
+			byte[] imageByte = FileUtils.readFileToByteArray(new File(path));
+			return Base64.encode(imageByte);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	return null;
     }
 
 }

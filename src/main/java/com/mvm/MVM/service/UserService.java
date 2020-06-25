@@ -1,11 +1,7 @@
 package com.mvm.MVM.service;
 
-import com.mvm.MVM.UserDto;
-import com.mvm.MVM.model.Category;
-import com.mvm.MVM.model.Role;
-import com.mvm.MVM.model.User;
-import com.mvm.MVM.repository.RoleRepository;
-import com.mvm.MVM.repository.UserRepository;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -14,10 +10,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.OneToMany;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import com.mvm.MVM.dto.UserDto;
+import com.mvm.MVM.model.Category;
+import com.mvm.MVM.model.User;
+import com.mvm.MVM.repository.RoleRepository;
+import com.mvm.MVM.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -43,6 +40,10 @@ public class UserService {
         if(!user.isPresent())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with id: " + id + "does not exist!");
         return user.get();
+    }
+    
+    public User findByUsername(String username) {
+    	return userRepository.findByUsername(username).get();
     }
 
     public void save(User user){
