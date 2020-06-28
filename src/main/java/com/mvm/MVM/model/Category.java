@@ -29,6 +29,10 @@ public class Category {
     @OneToMany(mappedBy = "category")
     @JsonIgnore
     private List<User> users;
+    
+    @OneToOne(mappedBy = "category")
+    @JsonIgnore
+    private Forum forum;
 
     public Category() {
     }
@@ -64,4 +68,12 @@ public class Category {
     public void setUsers(List<User> users) {
         this.users = users;
     }
+
+	public Forum getForum() {
+		return forum;
+	}
+
+	public void setForum(Forum forum) {
+		this.forum = forum;
+	}
 }

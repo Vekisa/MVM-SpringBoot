@@ -1,9 +1,3 @@
-INSERT INTO `mvm`.`user` (`name`, `password`, `username`) VALUES ('USER', '$2a$10$a00nqUIZBgh9OtnCyqHhk.VT73kyt8aiYK2216.yvtgBMR7EPqOf.', 'user');
-
-INSERT INTO `mvm`.`role` (`id`, `name`) VALUES ('1', 'ROLE_USER');
-
-INSERT INTO `mvm`.`user_roles` (`user_id`, `role_id`) VALUES ('1', '1');
-
 INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('1', 'Jaja i živinsko meso');
 INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('2', 'Živa stoka');
 INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('3', 'Mleko');
@@ -11,6 +5,15 @@ INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('4', 'Mlečni proizvodi');
 INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('5', 'Voće');
 INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('6', 'Povrće');
 INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('7', 'Žitarice');
+
+INSERT INTO `mvm`.`user` (`name`, `password`, `username`) VALUES ('USER', '$2a$10$a00nqUIZBgh9OtnCyqHhk.VT73kyt8aiYK2216.yvtgBMR7EPqOf.', 'user');
+INSERT INTO `mvm`.`user` (`name`, `password`, `username`, `category_id`) VALUES ('Milica Matijevic', '$2a$10$PzRvaXkFuJsFzd2RBL5wnOTEST96YasTLQiaM3RLpq/67J7Yrmxsi', 'mica', '6'); /*password: 123*/
+
+
+INSERT INTO `mvm`.`role` (`id`, `name`) VALUES ('1', 'ROLE_USER');
+
+INSERT INTO `mvm`.`user_roles` (`user_id`, `role_id`) VALUES ('1', '1');
+INSERT INTO `mvm`.`user_roles` (`user_id`, `role_id`) VALUES ('2', '1');
 
 INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('1', 'src/main/resources/chicken.png', '1');
 INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('2', 'src/main/resources/lamb.png', '2');
