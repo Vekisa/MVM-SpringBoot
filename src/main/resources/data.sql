@@ -22,3 +22,14 @@ INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('4', 'src/main/r
 INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('5', 'src/main/resources/fruit.png', '5');
 INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('6', 'src/main/resources/vegetables.png', '6');
 INSERT INTO `mvm`.`image` (`id`, `path`, `category_id`) VALUES ('7', 'src/main/resources/grains.png', '7');
+
+INSERT INTO `mvm`.`forum` (`id`,`category_id`) VALUES (1,1);
+INSERT INTO `mvm`.`forum` (`id`,`category_id`) VALUES (2,2);
+INSERT INTO `mvm`.`forum` (`id`,`category_id`) VALUES (3,3);
+INSERT INTO `mvm`.`forum` (`id`,`category_id`) VALUES (4,4);
+INSERT INTO `mvm`.`forum` (`id`,`category_id`) VALUES (5,5);
+INSERT INTO `mvm`.`forum` (`id`,`category_id`) VALUES (6,6);
+INSERT INTO `mvm`.`forum` (`id`,`category_id`) VALUES (7,7);
+
+INSERT INTO `mvm`.`discussion` (`id`,`content`,`date_time`,`title`,`forum_id`,`user_id`) VALUES (1,'sadrzaj','2020-06-28 23:00:00.000000','naslov',6,2);
+INSERT INTO `mvm`.`discussion` (`id`,`content`,`date_time`,`title`,`forum_id`,`user_id`) VALUES (2,'sadrzaj2','2020-06-28 23:01:00.000000','naslov2',6,2);

@@ -1,5 +1,6 @@
 package com.mvm.MVM.service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.mvm.MVM.dto.DiscussionDto;
 import com.mvm.MVM.model.Discussion;
+import com.mvm.MVM.model.Image;
 import com.mvm.MVM.repository.DiscussionRepository;
 import com.mvm.MVM.repository.ForumRepository;
 
@@ -43,21 +45,26 @@ public class DiscussionService {
 	public DiscussionDto model2dto(Discussion discussion) {
 		if(discussion != null) {
 			DiscussionDto dto = new DiscussionDto();
-			dto.setUserImage(imageService.bitmap2String(imageService.findByUserId(discussion.getUser().getId()).getPath()));
+			Image image = imageService.findByUserId(discussion.getUser().getId());
+			if(image != null) {
+				dto.setUserImage(imageService.bitmap2String(image.getPath()));
+			}
 			dto.setUserName(discussion.getUser().getName());
 			dto.setTitle(discussion.getTitle());
 			dto.setContent(discussion.getContent());
-			dto.setDateTime(new SimpleDateFormat("dd.mm.yyyy hh:mm:ss").format(discussion.getDateTime()));
+			dto.setDateTime(new SimpleDateFormat("dd.MM.yyyy HH:mm").format(discussion.getDateTime()));
+			dto.setForumId(discussion.getForum().getId().toString());
+			dto.setUserUsername(discussion.getUser().getUsername());
 			return dto;
 		}
 		return null;
 	}
 	
-	public Discussion dto2model(DiscussionDto dto) {
+	public Discussion dto2model(DiscussionDto dto) throws ParseException {
 		if(dto != null) {
 			Discussion dis = new Discussion();
 			dis.setContent(dto.getContent());
-			dis.setDateTime(Date.from(LocalDate.parse(dto.getDateTime()).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+			dis.setDateTime((Date) new SimpleDateFormat("dd.MM.yyyy HH:mm").parse(dto.getDateTime()));
 			dis.setForum(forumRepo.findById(Long.parseLong(dto.getForumId())).get());
 			dis.setTitle(dto.getTitle());
 			dis.setUser(userService.findByUsername(dto.getUserUsername()));
