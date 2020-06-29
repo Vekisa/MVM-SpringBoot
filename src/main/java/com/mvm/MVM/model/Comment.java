@@ -1,66 +1,69 @@
 package com.mvm.MVM.model;
 
-import org.springframework.dao.DataAccessException;
-
-import javax.persistence.*;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Comment {
-
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    private Long id;
+	
+	@ManyToOne
+	private User user;
+	
+	@ManyToOne
+	private Discussion discussion;
+	
+	@Column
+	private String content;
+	
+	@Column
+	private Date dateTime;
 
-    private String content;
-    private Date posted;
+	public Long getId() {
+		return id;
+	}
 
-    @ManyToOne
-    private Discussion discussion;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    @ManyToOne
-    private User user;
+	public User getUser() {
+		return user;
+	}
 
-    public Comment() {
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Discussion getDiscussion() {
+		return discussion;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setDiscussion(Discussion discussion) {
+		this.discussion = discussion;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public Date getPosted() {
-        return posted;
-    }
+	public Date getDateTime() {
+		return dateTime;
+	}
 
-    public void setPosted(Date posted) {
-        this.posted = posted;
-    }
-
-    public Discussion getDiscussion() {
-        return discussion;
-    }
-
-    public void setDiscussion(Discussion discussion) {
-        this.discussion = discussion;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
+	}
 }

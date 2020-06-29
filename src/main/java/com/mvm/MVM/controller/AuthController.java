@@ -1,13 +1,16 @@
 package com.mvm.MVM.controller;
 
-import com.mvm.MVM.UserDto;
+import com.mvm.MVM.dto.UserDto;
 import com.mvm.MVM.model.User;
+import com.mvm.MVM.repository.UserRepository;
+import com.mvm.MVM.service.CategoryService;
 import com.mvm.MVM.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +22,9 @@ public class AuthController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private CategoryService categoryService; 
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> userRegistration(@RequestBody UserDto user){
@@ -27,8 +33,20 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/current_user", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> currentUser(){
-        return new ResponseEntity<>(userService.getCurrentUser(),HttpStatus.OK);
+    public ResponseEntity<UserDto> currentUser(){
+    	UserDto dto = new UserDto();
+        return new ResponseEntity<>(dto.user2dto(userService.getCurrentUser()),HttpStatus.OK);
+    }
+    
+    @PostMapping("/save")
+    public ResponseEntity save(@RequestBody UserDto dto) {
+    	User user = userService.findByUsername(dto.getUsername());
+    	user.setCategory(categoryService.findByName(dto.getCategory()));
+    	user.setName(dto.getName());
+    	user.setPassword(dto.getPassword());
+    	user.setUsername(dto.getUsername());
+    	userService.save(user);
+    	return ResponseEntity.ok().build();
     }
 
 }

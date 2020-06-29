@@ -1,12 +1,11 @@
-package com.mvm.MVM;
+package com.mvm.MVM.dto;
 
-import com.mvm.MVM.model.Category;
-
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
+import com.mvm.MVM.model.User;
 
 public class UserDto {
 
+	private String id;
+	
     private String username;
 
     private String name;
@@ -19,6 +18,15 @@ public class UserDto {
 
     }
 
+    public UserDto user2dto(User user) {
+    	this.setId(user.getId().toString());
+    	this.setCategory(user.getCategory().getName());
+    	this.setName(user.getName());
+    	this.setPassword(user.getPassword());
+    	this.setUsername(user.getUsername());
+    	return this;
+    }
+    
     public String getUsername() {
         return username;
     }
@@ -50,4 +58,12 @@ public class UserDto {
     public void setCategory(String category) {
         this.category = category;
     }
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 }

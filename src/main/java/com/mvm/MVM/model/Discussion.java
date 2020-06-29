@@ -1,64 +1,93 @@
 package com.mvm.MVM.model;
 
-import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 @Entity
 public class Discussion {
-
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    private Long id;
+	
+	@OneToMany(mappedBy = "discussion")
+	private List<Comment> comments;
+	
+	@ManyToOne
+	private Forum forum;
+	
+	@ManyToOne
+	private User user;
 
-    private String title;
-    private Date posted;
-    private String content;
+	@Column
+	private String content;
+	
+	@Column
+	private Date dateTime;
+	
+	@Column
+	private String title;
+	
+	public Long getId() {
+		return id;
+	}
 
-    @OneToMany(mappedBy = "discussion",cascade = CascadeType.ALL)
-    private List<Comment> comments = new ArrayList<>();
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Discussion() {
-    }
+	public List<Comment> getComments() {
+		return comments;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Forum getForum() {
+		return forum;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public void setForum(Forum forum) {
+		this.forum = forum;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public Date getPosted() {
-        return posted;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public void setPosted(Date posted) {
-        this.posted = posted;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public Date getDateTime() {
+		return dateTime;
+	}
 
-    public List<Comment> getComments() {
-        return comments;
-    }
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
+	}
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 }
