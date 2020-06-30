@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,7 +32,6 @@ import com.mvm.MVM.dto.ImageDto;
 import com.mvm.MVM.model.Category;
 import com.mvm.MVM.model.Image;
 import com.mvm.MVM.repository.ImageRepository;
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 @Service
 public class ImageService {
@@ -154,7 +154,7 @@ public class ImageService {
     public String bitmap2String(String path) {
     	try {
 			byte[] imageByte = FileUtils.readFileToByteArray(new File(path));
-			return Base64.encode(imageByte);
+			return Base64.getEncoder().encodeToString((imageByte));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
