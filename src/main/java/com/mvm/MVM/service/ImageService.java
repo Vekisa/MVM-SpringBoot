@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.io.FileUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +27,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import java.util.Base64;
+
 
 import com.mvm.MVM.cofiguration.UploadFileResponse;
 import com.mvm.MVM.dto.ImageDto;
@@ -154,7 +157,7 @@ public class ImageService {
     public String bitmap2String(String path) {
     	try {
 			byte[] imageByte = FileUtils.readFileToByteArray(new File(path));
-			return Base64.getEncoder().encodeToString((imageByte));
+			return Base64.getEncoder().encodeToString(imageByte);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
