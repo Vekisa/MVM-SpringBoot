@@ -42,8 +42,8 @@ public class DiscussionService {
 		return forumRepo.findById(id).get().getDiscussions();
 	}
 	
-	public void save(Discussion discussion) {
-		discussionRepo.save(discussion);
+	public Long save(Discussion discussion) {
+		return discussionRepo.save(discussion).getId();
 	}
 	
 	public List<CommentDto> getComments(Long id){
@@ -52,6 +52,14 @@ public class DiscussionService {
 			dtos.add(commentService.model2dto(comment));
 		}
 		return dtos;
+	}
+	
+	public List<String> getImages(Long id){
+		List<String> contents = new ArrayList<String>();
+		for(Image image : discussionRepo.findById(id).get().getImages()) {
+			contents.add(imageService.bitmap2String(image.getPath()));
+		}
+		return contents;
 	}
 	
 	public DiscussionDto model2dto(Discussion discussion) {

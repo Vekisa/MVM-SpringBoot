@@ -62,10 +62,13 @@ public class ImageController {
         return imageService.downloadFile(fileName,request);
     }
     
-    @PostMapping("/profileImage")
+    @PostMapping("/save")
     public ResponseEntity<Image> saveProfileImage(@RequestBody ImageDto dto) {
     	Image image = imageService.dto2Image(dto);
-    	Image existedImage = imageService.findByUserId(Long.parseLong(dto.getUserId()));
+    	Image existedImage = null;
+    	if(dto.getUserId() != null) {
+    		existedImage = imageService.findByUserId(Long.parseLong(dto.getUserId()));
+    	}
     	if(existedImage != null) {
     		existedImage.setPath(image.getPath());
         	imageService.save(existedImage);

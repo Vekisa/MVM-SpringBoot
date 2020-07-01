@@ -2,8 +2,7 @@ package com.mvm.MVM.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.mvm.MVM.dto.CommentDto;
 import com.mvm.MVM.model.Comment;
+import com.mvm.MVM.model.Image;
 import com.mvm.MVM.repository.CommentRepository;
 
 @Service
@@ -28,12 +28,24 @@ public class CommentService {
 	@Autowired
 	UserService userService;
 	
+	public Comment findById(Long id) {
+		return commentRepo.findById(id).get();
+	}
+	
 	public List<Comment> findByDiscussionId(Long id){
 		return discussionService.findById(id).getComments();
 	}
 	
 	public void save(Comment comment) {
 		commentRepo.save(comment);
+	}
+	
+	public List<String> getImages(Long id){
+		List<String> contents = new ArrayList<String>();
+		for(Image image : commentRepo.findById(id).get().getImages()) {
+			contents.add(imageService.bitmap2String(image.getPath()));
+		}
+		return contents;
 	}
 	
 	public CommentDto model2dto(Comment comment) {
@@ -43,7 +55,10 @@ public class CommentService {
 			dto.setContent(comment.getContent());
 			dto.setDateTime(new SimpleDateFormat("dd.MM.yyyy HH:mm").format(comment.getDateTime()));
 			dto.setDiscussionId(comment.getDiscussion().getId().toString());
-			dto.setUserImage(imageService.bitmap2String(imageService.findByUserId(comment.getUser().getId()).getPath()));
+			Image image = imageService.findByUserId(comment.getUser().getId());
+			if(image != null) {
+				dto.setUserImage(imageService.bitmap2String(image.getPath()));
+			}
 			dto.setUserName(comment.getUser().getName());
 			dto.setUserUsername(comment.getUser().getUsername());
 			return dto;

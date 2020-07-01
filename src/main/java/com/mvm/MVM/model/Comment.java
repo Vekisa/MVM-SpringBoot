@@ -1,6 +1,7 @@
 package com.mvm.MVM.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Comment {
@@ -26,6 +28,9 @@ public class Comment {
 	
 	@Column
 	private Date dateTime;
+	
+	@OneToMany(mappedBy = "discussion")
+	private List<Image> images;
 
 	public Long getId() {
 		return id;
@@ -66,4 +71,13 @@ public class Comment {
 	public void setDateTime(Date dateTime) {
 		this.dateTime = dateTime;
 	}
+
+	public List<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
+	
 }

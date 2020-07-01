@@ -50,6 +50,12 @@ public class ImageService {
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    DiscussionService discussionService;
+    
+    @Autowired
+    CommentService commentService; 
 
     public void save(Image image){
         imageRepository.save(image);
@@ -131,13 +137,22 @@ public class ImageService {
     
     public Image dto2Image(ImageDto dto) {
     	Image image = new Image();
+    	int count = imageRepository.findAll().size() + 1;
     	if(dto.getCategoryId() != null) {
     		image.setCategory(categoryService.findById((long)Double.parseDouble(dto.getCategoryId())));
     	}
     	if(dto.getUserId() != null) {
     		image.setUser(userService.findById(Long.parseLong(dto.getUserId())));
+    		image.setPath(getPath(dto.getContent(), dto.getUserId()));
     	}
-    	image.setPath(getPath(dto.getContent(), dto.getUserId()));
+    	if(dto.getDiscussionId() != null) {
+    		image.setDiscussion(discussionService.findById(Long.parseLong(dto.getDiscussionId())));
+    		image.setPath(getPathDiscussion(dto.getContent(), dto.getDiscussionId(), count));
+    	}
+    	if(dto.getCommentId() != null) {
+    		image.setComment(commentService.findById(Long.parseLong(dto.getCommentId())));
+    		image.setPath(getPathComment(dto.getContent(), dto.getCommentId(), count));
+    	}
     	return image;
     }
     
@@ -146,6 +161,32 @@ public class ImageService {
     		byte[] imageByte = DatatypeConverter.parseBase64Binary(content);
     		BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageByte));
     		File outputFile = new File("src/main/resources/profile_image_" + userId + ".png");
+    		ImageIO.write(image, "png", outputFile);
+    		return outputFile.getPath();
+    	}catch (Exception e) {
+    		e.printStackTrace();
+		}
+    	return null;
+    }
+    
+    private String getPathDiscussion(String content, String disId, int count) {
+    	try {
+    		byte[] imageByte = DatatypeConverter.parseBase64Binary(content);
+    		BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageByte));
+    		File outputFile = new File("src/main/resources/discussion_image_" + count + "_" + disId + ".png");
+    		ImageIO.write(image, "png", outputFile);
+    		return outputFile.getPath();
+    	}catch (Exception e) {
+    		e.printStackTrace();
+		}
+    	return null;
+    }
+    
+    private String getPathComment(String content, String comId, int count) {
+    	try {
+    		byte[] imageByte = DatatypeConverter.parseBase64Binary(content);
+    		BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageByte));
+    		File outputFile = new File("src/main/resources/comment_image_" + count + "_" + comId + ".png");
     		ImageIO.write(image, "png", outputFile);
     		return outputFile.getPath();
     	}catch (Exception e) {

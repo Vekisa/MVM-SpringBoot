@@ -35,6 +35,9 @@ public class Discussion {
 	@Column
 	private String title;
 	
+	@OneToMany(mappedBy = "discussion")
+	private List<Image> images;
+	
 	public Long getId() {
 		return id;
 	}
@@ -90,4 +93,13 @@ public class Discussion {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+	public List<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
+	
 }

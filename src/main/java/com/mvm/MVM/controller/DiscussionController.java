@@ -24,17 +24,24 @@ public class DiscussionController {
 	DiscussionService discussionService;
 	
 	@PostMapping(value = "/save", consumes = "application/json")
-	public ResponseEntity save(@RequestBody DiscussionDto dto) {
+	public ResponseEntity<Long> save(@RequestBody DiscussionDto dto) {
+		Long id = null;
 		try {
-			discussionService.save(discussionService.dto2model(dto));
+			id = discussionService.save(discussionService.dto2model(dto));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return ResponseEntity.ok().build();
+		return new ResponseEntity<Long>(id, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/getComments/{id}", produces = "application/json")
 	public ResponseEntity<List<CommentDto>> getComments(@PathVariable(value = "id") String discussionId){
 		return new ResponseEntity<List<CommentDto>>(discussionService.getComments(Long.parseLong(discussionId)), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getImages/{id}")
+	public ResponseEntity<List<String>> getImages(@PathVariable(value = "id") String id){
+		List<String> contents = discussionService.getImages(Long.parseLong(id));
+		return new ResponseEntity<List<String>>(contents, HttpStatus.OK);
 	}
 }
