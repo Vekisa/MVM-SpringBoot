@@ -14,34 +14,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mvm.MVM.dto.CommentDto;
-import com.mvm.MVM.dto.DiscussionDto;
-import com.mvm.MVM.service.DiscussionService;
+import com.mvm.MVM.service.CommentService;
 
 @RestController
-@RequestMapping(value = "/discussion")
-public class DiscussionController {
+@RequestMapping(value = "/comment")
+public class CommentController {
+
 	@Autowired
-	DiscussionService discussionService;
+	CommentService commentService;
 	
 	@PostMapping(value = "/save", consumes = "application/json")
-	public ResponseEntity<Long> save(@RequestBody DiscussionDto dto) {
-		Long id = null;
-		try {
-			id = discussionService.save(discussionService.dto2model(dto));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return new ResponseEntity<Long>(id, HttpStatus.OK);
-	}
-	
-	@GetMapping(value = "/getComments/{id}", produces = "application/json")
-	public ResponseEntity<List<CommentDto>> getComments(@PathVariable(value = "id") String discussionId){
-		return new ResponseEntity<List<CommentDto>>(discussionService.getComments(Long.parseLong(discussionId)), HttpStatus.OK);
+	public ResponseEntity save(@RequestBody CommentDto dto) throws ParseException {
+		commentService.save(commentService.dto2model(dto));
+		return ResponseEntity.ok().build();
 	}
 	
 	@GetMapping(value = "/getImages/{id}")
 	public ResponseEntity<List<String>> getImages(@PathVariable(value = "id") String id){
-		List<String> contents = discussionService.getImages(Long.parseLong(id));
+		List<String> contents = commentService.getImages(Long.parseLong(id));
 		return new ResponseEntity<List<String>>(contents, HttpStatus.OK);
 	}
 }

@@ -6,6 +6,8 @@ public class ImageDto {
 	private String content;
 	private String categoryId;
 	private String userId;
+	private String discussionId;
+	private String commentId;
 	
 	public String getPath() {
 		return path;
@@ -31,4 +33,17 @@ public class ImageDto {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	public String getDiscussionId() {
+		return discussionId;
+	}
+	public void setDiscussionId(String discussionId) {
+		this.discussionId = discussionId;
+	}
+	public String getCommentId() {
+		return commentId;
+	}
+	public void setCommentId(String commentId) {
+		this.commentId = commentId;
+	}
+	
 }

@@ -22,6 +22,13 @@ public class Image {
     @OneToOne
     private User user;
 
+    @JsonIgnore
+    @ManyToOne
+    private Discussion discussion;
+    
+    @JsonIgnore
+    @ManyToOne
+    private Comment comment;
 
     public Image() {
     }
@@ -57,4 +64,21 @@ public class Image {
     public void setUser(User user) {
         this.user = user;
     }
+
+	public Discussion getDiscussion() {
+		return discussion;
+	}
+
+	public void setDiscussion(Discussion discussion) {
+		this.discussion = discussion;
+	}
+
+	public Comment getComment() {
+		return comment;
+	}
+
+	public void setComment(Comment comment) {
+		this.comment = comment;
+	}
+    
 }
