@@ -2,15 +2,16 @@ package com.mvm.MVM.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mvm.MVM.dto.CommentDto;
 import com.mvm.MVM.dto.DiscussionDto;
+import com.mvm.MVM.model.Comment;
 import com.mvm.MVM.model.Discussion;
 import com.mvm.MVM.model.Image;
 import com.mvm.MVM.repository.DiscussionRepository;
@@ -30,6 +31,9 @@ public class DiscussionService {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	CommentService commentService;
+	
 	public Discussion findById(Long id) {
 		return discussionRepo.findById(id).get();
 	}
@@ -42,6 +46,14 @@ public class DiscussionService {
 		discussionRepo.save(discussion);
 	}
 	
+	public List<CommentDto> getComments(Long id){
+		List<CommentDto> dtos = new ArrayList<CommentDto>();
+		for(Comment comment : discussionRepo.findById(id).get().getComments()) {
+			dtos.add(commentService.model2dto(comment));
+		}
+		return dtos;
+	}
+	
 	public DiscussionDto model2dto(Discussion discussion) {
 		if(discussion != null) {
 			DiscussionDto dto = new DiscussionDto();
@@ -49,6 +61,7 @@ public class DiscussionService {
 			if(image != null) {
 				dto.setUserImage(imageService.bitmap2String(image.getPath()));
 			}
+			dto.setId(discussion.getId().toString());
 			dto.setUserName(discussion.getUser().getName());
 			dto.setTitle(discussion.getTitle());
 			dto.setContent(discussion.getContent());
