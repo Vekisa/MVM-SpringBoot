@@ -1,17 +1,26 @@
 package com.mvm.MVM.controller;
 
 import com.mvm.MVM.dto.ForumDto;
+import com.mvm.MVM.model.Category;
 import com.mvm.MVM.model.mocked.PredictedPrice;
+import com.mvm.MVM.repository.CategoryRepository;
+import com.mvm.MVM.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/mocked")
 public class MockedValues {
+
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping(value = "/predicted_prices", produces = "application/json")
     public ResponseEntity<List<PredictedPrice>> prdictedPrice(){
@@ -64,5 +73,9 @@ public class MockedValues {
         return new ResponseEntity<>(pp, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/production_suggestion", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Category> getSuggestion(@RequestParam Integer first, @RequestParam Integer second){
+        return new ResponseEntity<>(categoryService.findById(1l), HttpStatus.OK);
+    }
 
 }
