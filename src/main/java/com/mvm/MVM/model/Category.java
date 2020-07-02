@@ -29,6 +29,10 @@ public class Category {
     @OneToMany(mappedBy = "category")
     @JsonIgnore
     private List<User> users;
+
+    @OneToMany(mappedBy = "category")
+    @JsonIgnore
+    private List<Product> products;
     
     @OneToOne(mappedBy = "category")
     @JsonIgnore
@@ -76,4 +80,12 @@ public class Category {
 	public void setForum(Forum forum) {
 		this.forum = forum;
 	}
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 }
