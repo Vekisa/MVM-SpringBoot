@@ -10,11 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -48,5 +44,19 @@ public class AuthController {
     	userService.save(user);
     	return ResponseEntity.ok().build();
     }
+
+    @RequestMapping(value = "/sub", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDto> subUser(@RequestParam String token){
+        userService.subscribeToTopic(token);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/unSub", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDto> unSubUser(@RequestParam String token){
+        userService.unSubscribeToTopic(token);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 
 }

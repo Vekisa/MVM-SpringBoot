@@ -1,7 +1,11 @@
 package com.mvm.MVM.service;
 
+import java.util.Arrays;
 import java.util.Optional;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.TopicManagementResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -82,5 +86,30 @@ public class UserService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Optional<User> user = userRepository.findByUsername(auth.getName());
         return user.get();
+    }
+
+    public void subscribeToTopic(String token){
+        TopicManagementResponse response = null;
+
+
+        try {
+            response = FirebaseMessaging.getInstance().subscribeToTopic(Arrays.asList(token),getCurrentUser().getCategory().getName().trim());
+        } catch (FirebaseMessagingException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Successfully sent message: " + response.getSuccessCount());
+
+    }
+
+    public void unSubscribeToTopic(String token){
+        TopicManagementResponse response= null;
+        try {
+            response = FirebaseMessaging.getInstance().unsubscribeFromTopic(Arrays.asList(token),getCurrentUser().getCategory().getName().trim());
+        } catch (FirebaseMessagingException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Successfully sent message: " + response.getSuccessCount());
+
     }
 }
