@@ -3,6 +3,9 @@ package com.mvm.MVM.cofiguration;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.messaging.*;
+import com.mvm.MVM.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,6 +13,8 @@ import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 
 @Configuration
 public class FirebaseSDK {
@@ -40,6 +45,46 @@ public class FirebaseSDK {
 
 
     }
+
+    public static void sendPush(String title,String messageToSend,String topic){
+
+        AndroidNotification androidNofi = AndroidNotification.builder()
+                .setSound("default")
+                .build();
+
+        Notification notification = Notification.builder().setTitle(title).setBody(messageToSend).build();
+
+        Message message = Message.builder()
+                .setNotification(notification)
+                .setAndroidConfig(AndroidConfig.builder()
+                        .setTtl(3600 * 1000)
+                        .setNotification(androidNofi)
+                        .build())
+                .setApnsConfig(ApnsConfig.builder()
+                        .setAps(Aps.builder()
+                                .setBadge(42)
+                                .build())
+                        .build())
+                .setTopic(topic)
+                .build();
+
+
+
+        String response = null;
+        try {
+            response = FirebaseMessaging.getInstance().sendAsync(message).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Successfully sent message: " + response);
+
+
+    }
+
+
 
 
 }
