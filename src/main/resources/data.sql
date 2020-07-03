@@ -1,10 +1,10 @@
-INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('1', 'Jaja i živinsko meso');
-INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('2', 'Živa stoka');
+INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('1', 'Jaja i zivinsko meso');
+INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('2', 'Ziva stoka');
 INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('3', 'Mleko');
-INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('4', 'Mlečni proizvodi');
-INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('5', 'Voće');
-INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('6', 'Povrće');
-INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('7', 'Žitarice');
+INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('4', 'Mlecni proizvodi');
+INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('5', 'Voce');
+INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('6', 'Povrce');
+INSERT INTO `mvm`.`category` (`id`, `name`) VALUES ('7', 'Zitarice');
 
 INSERT INTO `mvm`.`user` (`name`, `password`, `username`) VALUES ('USER', '$2a$10$a00nqUIZBgh9OtnCyqHhk.VT73kyt8aiYK2216.yvtgBMR7EPqOf.', 'user');
 INSERT INTO `mvm`.`user` (`name`, `password`, `username`, `category_id`) VALUES ('Milica Matijevic', '$2a$10$PzRvaXkFuJsFzd2RBL5wnOTEST96YasTLQiaM3RLpq/67J7Yrmxsi', 'mica', '6'); /*password: 123*/

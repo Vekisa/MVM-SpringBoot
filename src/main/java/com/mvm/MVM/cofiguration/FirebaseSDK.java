@@ -24,7 +24,7 @@ public class FirebaseSDK {
 
         FileInputStream serviceAccount = null;
         try {
-            serviceAccount = new FileInputStream("C:\\Users\\PC\\Documents\\androidradnik-firebase-adminsdk-nu5dk-93c537f39d.json");
+            serviceAccount = new FileInputStream("C://Users//Milica//Downloads//androidradnik-firebase-adminsdk-nu5dk-93c537f39d.json");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
