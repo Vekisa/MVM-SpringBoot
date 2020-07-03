@@ -52,6 +52,8 @@ public class FirebaseSDK {
                 .setSound("default")
                 .build();
 
+        System.out.println(topic);
+
         Notification notification = Notification.builder().setTitle(title).setBody(messageToSend).build();
 
         Message message = Message.builder()
@@ -59,11 +61,6 @@ public class FirebaseSDK {
                 .setAndroidConfig(AndroidConfig.builder()
                         .setTtl(3600 * 1000)
                         .setNotification(androidNofi)
-                        .build())
-                .setApnsConfig(ApnsConfig.builder()
-                        .setAps(Aps.builder()
-                                .setBadge(42)
-                                .build())
                         .build())
                 .setTopic(topic)
                 .build();
@@ -73,6 +70,7 @@ public class FirebaseSDK {
         String response = null;
         try {
             response = FirebaseMessaging.getInstance().sendAsync(message).get();
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

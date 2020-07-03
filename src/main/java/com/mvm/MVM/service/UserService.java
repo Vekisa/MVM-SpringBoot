@@ -91,6 +91,8 @@ public class UserService {
     public void subscribeToTopic(String token){
         TopicManagementResponse response = null;
 
+        System.out.println(getCurrentUser().getCategory().getName().trim());
+        System.out.println(token);
 
         try {
             response = FirebaseMessaging.getInstance().subscribeToTopic(Arrays.asList(token),getCurrentUser().getCategory().getName().trim());
