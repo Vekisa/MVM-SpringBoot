@@ -23,4 +23,9 @@ public class CategoryController {
     public ResponseEntity<List<Category>> getDepartments(){
         return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/my_category", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Category> myCategory(){
+        return new ResponseEntity<>(categoryService.myCategory(), HttpStatus.OK);
+    }
 }

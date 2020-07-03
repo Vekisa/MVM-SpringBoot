@@ -1,6 +1,7 @@
 package com.mvm.MVM.service;
 
 import com.mvm.MVM.model.Category;
+import com.mvm.MVM.model.User;
 import com.mvm.MVM.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,9 @@ public class CategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private UserService userService;
 
     public List<Category> findAll(){
         return categoryRepository.findAll();
@@ -37,5 +41,10 @@ public class CategoryService {
         if(!category.isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nema kategorije!");
         return categoryRepository.findByName(name.trim()).get();
+    }
+
+    public Category myCategory(){
+        User user = userService.getCurrentUser();
+        return user.getCategory();
     }
 }
