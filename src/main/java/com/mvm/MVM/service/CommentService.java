@@ -36,8 +36,8 @@ public class CommentService {
 		return discussionService.findById(id).getComments();
 	}
 	
-	public void save(Comment comment) {
-		commentRepo.save(comment);
+	public Long save(Comment comment) {
+		return commentRepo.save(comment).getId();
 	}
 	
 	public List<String> getImages(Long id){
