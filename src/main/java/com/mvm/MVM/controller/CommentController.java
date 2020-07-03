@@ -24,9 +24,10 @@ public class CommentController {
 	CommentService commentService;
 	
 	@PostMapping(value = "/save", consumes = "application/json")
-	public ResponseEntity save(@RequestBody CommentDto dto) throws ParseException {
-		commentService.save(commentService.dto2model(dto));
-		return ResponseEntity.ok().build();
+	public ResponseEntity<Long> save(@RequestBody CommentDto dto) throws ParseException {
+		Long id = null;
+		id = commentService.save(commentService.dto2model(dto));
+		return new ResponseEntity<Long>(id, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/getImages/{id}")
