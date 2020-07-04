@@ -34,6 +34,12 @@ public class AuthController {
         return new ResponseEntity<>(dto.user2dto(userService.getCurrentUser()),HttpStatus.OK);
     }
     
+    @RequestMapping(value = "/findById/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDto> findById(@PathVariable(value = "id") String id){
+    	UserDto dto = new UserDto();
+        return new ResponseEntity<>(dto.user2dto(userService.findById(Long.parseLong(id))),HttpStatus.OK);
+    }
+    
     @PostMapping("/save")
     public ResponseEntity save(@RequestBody UserDto dto) {
     	User user = userService.findByUsername(dto.getUsername());

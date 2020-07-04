@@ -76,6 +76,7 @@ public class DiscussionService {
 			dto.setDateTime(new SimpleDateFormat("dd.MM.yyyy HH:mm").format(discussion.getDateTime()));
 			dto.setForumId(discussion.getForum().getId().toString());
 			dto.setUserUsername(discussion.getUser().getUsername());
+			dto.setUserId(discussion.getUser().getId().toString());
 			return dto;
 		}
 		return null;
