@@ -22,9 +22,8 @@ public class OfferController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getOffer(){
 
-        offerService.offerSet();
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(offerService.getOffers(),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

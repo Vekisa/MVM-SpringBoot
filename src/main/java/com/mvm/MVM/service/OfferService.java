@@ -4,10 +4,12 @@ import com.google.firebase.messaging.*;
 
 import com.mvm.MVM.cofiguration.FirebaseSDK;
 import com.mvm.MVM.model.Offer;
+import com.mvm.MVM.repository.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -15,6 +17,9 @@ public class OfferService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OfferRepository offerRepository;
 
     public void offerSet(){
 
@@ -25,15 +30,33 @@ public class OfferService {
 
     }
 
+    public List<Offer> getOffers(){
+
+        String name = userService.getCurrentUser().getName();
+
+        String topic = userService.getCurrentUser().getCategory().getName();
+
+        return offerRepository.getAllByCategoryName(topic);
+
+    }
+
 
     public void postOffer(Offer offer) {
         String name = userService.getCurrentUser().getName();
 
         String topic = userService.getCurrentUser().getCategory().getName().trim();
 
-        String fullMessage = offer.getName() + " " + "\n"+" Cena:"+offer.getPrice();
+
+        offer.setCategoryName(userService.getCurrentUser().getCategory().getName());
+        offer.setUsername(name);
+
+
+
+        String fullMessage = offer.getName()+"\n"+"Cena:"+offer.getPrice();
 
         FirebaseSDK.sendPush(name,fullMessage,topic);
+
+        offerRepository.save(offer);
 
 
     }
